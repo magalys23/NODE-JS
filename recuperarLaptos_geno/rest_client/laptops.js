@@ -37,3 +37,27 @@ export const saveLaptoRest=(lapto,fnShowMessage)=>{
         console.log(body);
     });
 }
+export const updateLaptoRest=(lapto,fnShowMessage)=>{
+    const config={
+        method:"PUT",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            id:lapto.id,
+            marca:lapto.marca,
+            procesador:lapto.procesador,
+            memoria:lapto.memoria,
+            disco:lapto.disco
+      
+            })
+    }
+    fetch(
+        URL+"laptops/"+lapto.id,config
+    )
+    .then(response=>response.json())
+    .then(body=>{
+        fnShowMessage();
+        console.log(body);
+    });
+}
