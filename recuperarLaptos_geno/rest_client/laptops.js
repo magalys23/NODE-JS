@@ -33,7 +33,7 @@ export const saveLaptoRest=(lapto,fnShowMessage)=>{
     )
     .then(response=>response.json())
     .then(body=>{
-        fnShowMessage();
+        fnShowMessage("Lapto creada");
         console.log(body);
     });
 }
@@ -57,7 +57,21 @@ export const updateLaptoRest=(lapto,fnShowMessage)=>{
     )
     .then(response=>response.json())
     .then(body=>{
-        fnShowMessage();
+        fnShowMessage("Lapto actualizada");
+        console.log(body);
+    });
+}
+export const deleteLaptoRest=(contact,fnShowMessage)=>{
+    const config={
+        method:"DELETE"
+        
+    }
+    fetch(
+        URL+"laptops/"+contact.id,config
+    )
+    .then(response=>response.json())
+    .then(body=>{
+        fnShowMessage("Lapto eliminada");
         console.log(body);
     });
 }

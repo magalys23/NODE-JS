@@ -57,6 +57,7 @@ app.delete('/laptops/:id', (req, res) => {
   laptops = laptops.filter((laptop) => laptop.id !== id);
   console.log("Laptop eliminada con id:", id);
   res.sendStatus(200);
+  res.send({id:id});
 });
 
 // Iniciar el servidor

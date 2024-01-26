@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { Input, Button } from "@rneui/base";
 import { useState } from "react";
-import { saveContactRest, updateContactRest } from "../rest_client/contactos";
+import { saveContactRest, updateContactRest, deleteContactRest } from "../rest_client/contactos";
 
 export const ContactsForm = ({ navigation, route }) => {
   let contactRetrieved = route.params.contactParam;
@@ -13,12 +13,15 @@ export const ContactsForm = ({ navigation, route }) => {
   console.log("contactRetrieved: ", contactRetrieved);
 
   const [name, setName] = useState(isNew ? null : contactRetrieved.nombre);
-  const [lastname, setLastName] = useState(isNew ? null : contactRetrieved.apellido);
-  const [phoneNumber, setPhoneNumber] = useState(isNew ? null : contactRetrieved.celular
+  const [lastname, setLastName] = useState(
+    isNew ? null : contactRetrieved.apellido
+  );
+  const [phoneNumber, setPhoneNumber] = useState(
+    isNew ? null : contactRetrieved.celular
   );
 
-  const showMessage = () => {
-    Alert.alert("CONFIRMACIÓN",isNew ? "Contacto creado" : "Contacto actualizado");
+  const showMessage = (message) => {
+    Alert.alert("CONFIRMACIÓN", message);
     navigation.goBack();
   };
   const createContact = () => {
@@ -47,6 +50,23 @@ export const ContactsForm = ({ navigation, route }) => {
     );
   };
 
+  const confirmDelete = () => {
+    Alert.alert("CONFIRMACIÓN", "¿Está seguro que deseas eliminar?", 
+    [{
+      text:"Si",
+      onPress: (deleteContact)
+    },
+    {
+      text:"Cancelar"
+    },
+  ]);
+  };
+  const deleteContact=()=>{
+    deleteContactRest({
+      id:contactRetrieved.id
+    }, showMessage)
+  }
+
   return (
     <View style={styles.container}>
       <Text>FORMULARIO DE CONTACTOS</Text>
@@ -72,6 +92,7 @@ export const ContactsForm = ({ navigation, route }) => {
         }}
       />
       <Button title="GUARDAR" onPress={isNew ? createContact : updateContact} />
+      {isNew ? <View></View> : <Button title="ELIMINAR" onPress={confirmDelete} />}
     </View>
   );
 };

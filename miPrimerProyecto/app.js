@@ -37,7 +37,7 @@ app.put("/contactos/:idParam",(request,response)=>{
 app.delete("/contactos/:id",(request,response)=>{
     const id=request.params.id;
     console.log("id: ",id);
-    response.send();
+    response.send({id:id});
 });
 app.listen(puerto,()=>{
     console.log("Servidor listo en el puerto "+ 3001);
